@@ -1668,6 +1668,17 @@ function onload()
             },
             homepage: "https://asuro.xyz/",
         },
+        {
+            // Tiny demo shipped with this fork: a 512-byte boot sector that
+            // prints every key you press. Lets the preview run fully offline,
+            // while the network-dependent images are not available.
+            id: "extra-keys-demo",
+            fda: {
+                url: "images/extra-keys-demo.img",
+                size: 512,
+            },
+            name: "Extra Keys Demo",
+        },
     ];
 
     if(DEBUG)

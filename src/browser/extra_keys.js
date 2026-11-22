@@ -11,7 +11,7 @@
  * textarea (the tap's pointerdown event is defaultPrevented), so the
  * virtual keyboard stays open on phones.
  *
- * Ctrl/Alt/Shift/Win behave as one-shot sticky modifiers: tap once to
+ * Ctrl/Alt/Shift/Win/AltGr behave as one-shot sticky modifiers: tap once to
  * arm (the button lights up), tap again to disarm, or they disarm
  * themselves after the next key is pressed - including the next character
  * typed through the soft keyboard. The dedicated combination buttons
@@ -57,6 +57,7 @@ const LAYOUT = [
         { mod: "alt", title: "Alt, sticky: applies to the next key" },
         { mod: "shift", title: "Shift, sticky: applies to the next key" },
         { mod: "win", title: "Win (Super/Meta), sticky: applies to the next key" },
+        { mod: "altgr", title: "AltGr (right Alt), sticky: applies to the next key" },
     ],
     [
         { label: "←", title: "Arrow Left", make: [0xE0, 0x4B] },
@@ -90,8 +91,23 @@ const LAYOUT = [
         { label: "Caps", title: "Caps Lock", make: [0x3A] },
         { label: "Num", title: "Num Lock", make: [0x45] },
         { label: "ScrLk", title: "Scroll Lock", make: [0x46] },
+        { label: "Pause", title: "Pause/Break", make: [0xE1, 0x1D, 0x45], release: [0xE1, 0x9D, 0xC5] },
+        { label: "`", title: "Backquote / tilde", make: [0x29] },
+        { label: "\\", title: "Backslash / pipe", make: [0x2B] },
         { label: "Menu", title: "Context Menu key", make: [0xE0, 0x5D] },
         { label: "PrtSc", title: "Print Screen", make: [0xE0, 0x2A, 0xE0, 0x37], release: [0xE0, 0xB7, 0xE0, 0xAA] },
+    ],
+    [
+        { label: "Alt+F4", title: "Close window (Alt+F4)", make: [0x3E], modifiers: ["alt"] },
+        { label: "Ctrl+Esc", title: "Start menu (Ctrl+Esc)", make: [0x01], modifiers: ["ctrl"] },
+        { label: "Ctrl+Shift+Esc", title: "Task Manager (Ctrl+Shift+Esc)", make: [0x01], modifiers: ["ctrl", "shift"] },
+        { label: "Win+D", title: "Show desktop (Win+D)", make: [0x20], modifiers: ["win"] },
+        { label: "Win+E", title: "File Explorer (Win+E)", make: [0x12], modifiers: ["win"] },
+        { label: "Win+R", title: "Run (Win+R)", make: [0x13], modifiers: ["win"] },
+        { label: "Win+L", title: "Lock (Win+L)", make: [0x26], modifiers: ["win"] },
+        { label: "Win+Tab", title: "Task view (Win+Tab)", make: [0x0F], modifiers: ["win"], hold_ms: 120 },
+        { label: "Win+I", title: "Settings (Win+I)", make: [0x17], modifiers: ["win"] },
+        { label: "Win+X", title: "Quick Link menu (Win+X)", make: [0x2D], modifiers: ["win"] },
     ],
     [
         { label: "Alt+Tab", title: "Alt+Tab, switch windows", make: [0x0F], modifiers: ["alt"], hold_ms: 120 },

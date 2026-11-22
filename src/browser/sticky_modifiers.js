@@ -19,11 +19,12 @@ export const MODIFIER_DEFS = {
     alt: { label: "Alt", make: [0x38] },
     shift: { label: "Shift", make: [0x2A] },
     win: { label: "Win", make: [0xE0, 0x5B] },
+    altgr: { label: "AltGr", make: [0xE0, 0x38] },
 };
 
 // Press order when several modifiers are combined; release happens in
 // reverse order
-export const MODIFIER_ORDER = ["ctrl", "alt", "shift", "win"];
+export const MODIFIER_ORDER = ["ctrl", "alt", "shift", "win", "altgr"];
 
 /** @type {!Object.<string, boolean>} */
 const armed = {
@@ -31,6 +32,7 @@ const armed = {
     alt: false,
     shift: false,
     win: false,
+    altgr: false,
 };
 
 /** @type {!Array.<function(): void>} */
