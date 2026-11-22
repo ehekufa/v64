@@ -1,4 +1,5 @@
 import { V86 } from "./starter.js";
+import { init_extra_keys } from "./extra_keys.js";
 import { LOG_NAMES } from "../const.js";
 import { SyncBuffer, SyncFileBuffer } from "../buffer.js";
 import { h, pad0, pads, hex_dump, dump_file, download, round_up_to_next_power_of_2 } from "../lib.js";
@@ -3254,8 +3255,12 @@ function init_ui(profile, settings, emulator)
         // No need to lock the mouse if the guest tracks the host cursor
         // through the absolute pointing device. The "Lock mouse" button can
         // still be used, e.g. for games (movement is then sent as relative
-        // deltas).
-        if(mouse_is_enabled && os_uses_mouse && !os_uses_absolute_mouse)
+        // deltas). Presses on the extra keys bar are not a request to play,
+        // so don't capture the mouse there.
+        const extra_keys_target = /** @type {!HTMLElement|null} */ (e.target || null);
+        const extra_keys_press = extra_keys_target && extra_keys_target.closest && extra_keys_target.closest(".extra_keys");
+
+        if(mouse_is_enabled && os_uses_mouse && !os_uses_absolute_mouse && !extra_keys_press)
         {
             emulator.lock_mouse();
         }
@@ -3280,6 +3285,16 @@ function init_ui(profile, settings, emulator)
     phone_keyboard.setAttribute("autocapitalize", "off");
     phone_keyboard.setAttribute("spellcheck", "false");
     phone_keyboard.tabIndex = 0;
+
+    // on-screen row of computer keys that phone keyboards don't have
+    const extra_keys = /** @type {!HTMLElement|null} */ (document.getElementById("extra_keys"));
+
+    if(extra_keys && !extra_keys.childNodes.length)
+    {
+        init_extra_keys(extra_keys, codes => {
+            emulator.keyboard_send_scancodes(codes);
+        });
+    }
 
     $("take_screenshot").onclick = function()
     {

@@ -1,5 +1,6 @@
 // For Types Only
 import { BusConnector } from "../bus.js";
+import { MODIFIER_DEFS, consume_sticky_modifiers, sticky_modifier_release_codes } from "./sticky_modifiers.js";
 
 const SHIFT_SCAN_CODE = 0x2A;
 const SCAN_CODE_RELEASE = 0x80;
@@ -381,6 +382,40 @@ export function KeyboardAdapter(bus)
         keys_pressed = {};
     }
 
+    /**
+     * Run fn() with the armed one-shot sticky modifiers (from the extra
+     * keys bar) held down, e.g. so that typing "c" on the phone keyboard
+     * while Ctrl is armed produces Ctrl+C in the guest.
+     *
+     * @param {function(): void} fn
+     */
+    function with_sticky_modifiers(fn)
+    {
+        const mods = consume_sticky_modifiers();
+
+        for(const id of mods)
+        {
+            const make = MODIFIER_DEFS[id].make;
+
+            for(let i = 0; i < make.length; i++)
+            {
+                send_to_controller(make[i]);
+            }
+        }
+
+        fn();
+
+        for(let i = mods.length - 1; i >= 0; i--)
+        {
+            const release = sticky_modifier_release_codes(MODIFIER_DEFS[mods[i]].make);
+
+            for(let j = 0; j < release.length; j++)
+            {
+                send_to_controller(release[j]);
+            }
+        }
+    }
+
     function input_handler(e)
     {
         if(!keyboard.bus)
@@ -398,16 +433,17 @@ export function KeyboardAdapter(bus)
             case "insertText":
                 for(var i = 0; i < e.data.length; i++)
                 {
-                    keyboard.simulate_char(e.data[i]);
+                    const chr = e.data[i];
+                    with_sticky_modifiers(function() { keyboard.simulate_char(chr); });
                 }
                 break;
 
             case "insertLineBreak":
-                keyboard.simulate_press(13); // enter
+                with_sticky_modifiers(function() { keyboard.simulate_press(13); }); // enter
                 break;
 
             case "deleteContentBackward":
-                keyboard.simulate_press(8); // backspace
+                with_sticky_modifiers(function() { keyboard.simulate_press(8); }); // backspace
                 break;
         }
     }
