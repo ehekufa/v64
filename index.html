@@ -132,6 +132,7 @@
 <a class="tr" href="?profile=bootchess" id="start_bootchess"><span>BootChess</span> <span>4.0 KB</span> <span><div class=tui_icon></div></span> <span>Custom</span> <span>16-bit</span> <span>Modern</span> <span>Open-source</span> <span>ASM</span> <span>Floppy</span> <span>Chess in a bootsector</span></a>
 <a class="tr" href="?profile=catk" id="start_catk"><span>CatK</span> <span>3.2 MB</span> <span><div class=tui_icon></div></span> <span>Custom</span> <span>32-bit</span> <span>Modern</span> <span>Open-source</span> <span>C</span> <span>CD</span> <span>Simple Unix-like kernel</span></a>
 <a class="tr" href="?profile=crazierl" id="start_crazierl"><span>Crazierl</span> <span>11 MB</span> <span><div class=tui_icon></div></span> <span>Custom</span> <span>32-bit</span> <span>Modern</span> <span>Open-source</span> <span>C, Erlang</span> <span>Multiboot</span> <span>An Erlang Operating System</span></a>
+<a class="tr" href="?profile=extra-keys-demo" id="start_extra-keys-demo"><span>Extra Keys Demo</span> <span>512 B</span> <span><div class=tui_icon></div></span> <span>Custom</span> <span>16-bit</span> <span>Modern</span> <span>Open-source</span> <span>ASM</span> <span>Bootsector</span> <span>Prints every key you press - built for the on-screen extra keys bar</span></a>
 <a class="tr" href="?profile=duskos" id="start_duskos"><span>Dusk OS</span> <span>0.4 MB</span> <span><div class=tui_icon></div></span> <span>Custom</span> <span>32-bit</span> <span>Modern</span> <span>Open-source</span> <span>C</span> <span>HD</span> <span>A 32-bit Forth</span></a>
 <a class="tr" href="?profile=floppybird" id="start_floppybird"><span>Floppy Bird</span> <span>6.5 KB</span> <span><div class=tui_icon></div></span> <span>Custom</span> <span>16-bit</span> <span>Modern</span> <span>Open-source</span> <span>C</span> <span>Floppy</span> <span>Flappy Bird game in a bootsector</span></a>
 <a class="tr" href="?profile=helenos" id="start_helenos"><span>HelenOS</span> <span>7.9 MB</span> <span><div class=gui_icon></div></span> <span>Custom</span> <span>32-bit</span> <span>Modern</span> <span>Open-source</span> <span>C</span> <span>CD</span> <span>A microkernel-based multiserver OS</span></a>
@@ -372,6 +373,7 @@
 <div id="screen_container" style="display: none">
     <div id="screen"></div>
     <canvas id="vga"></canvas>
+    <div id="extra_keys" class="extra_keys" role="toolbar" aria-label="Extra keyboard keys"></div>
     <div style="position: absolute; top: 0; z-index: 10">
         <textarea class="phone_keyboard"></textarea>
     </div>
